@@ -2,10 +2,10 @@
   <div class="blog-card">
     <div class="icons">
       <div class="icon">
-        <svg :src="EditIcon" class="edit" ></svg>
+        <AkEdit class="edit"/>
       </div>
       <div class="icon">
-        <img :src="DeleteIcon" class="delete"/>
+        <IcBin class="delete"/>
       </div>
     </div>
     <img :src="getImage()" alt="">
@@ -13,27 +13,21 @@
       <h4>{{ post.blogTitle }}</h4>
       <h6>Posted on: {{ post.blogDate }}</h6>
       <router-link class="link" to="#" >
-        View The Post <img :src="ArrowIcon" class="arrow"/>
+        View The Post <AnOutlinedArrowRight class="arrow"/>
       </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import ArrowIcon from '@/assets/Icons/arrow-right-light.svg';
-import EditIcon from '@/assets/Icons/edit-regular.svg';
-import DeleteIcon from '@/assets/Icons/trash-regular.svg';
+import { AnOutlinedArrowRight } from "@kalimahapps/vue-icons";
+import { IcBin } from "@kalimahapps/vue-icons";
+import { AkEdit } from "@kalimahapps/vue-icons";
 
 export default {
   name: "BlogCard",
   props: ["post"],
-  setup() {
-      return {
-        ArrowIcon,
-        EditIcon,
-        DeleteIcon
-      };
-    },
+  components: { IcBin, AkEdit, AnOutlinedArrowRight },
   methods: { getImage() { return require(`../assets/blogCards/${this.post.blogCoverPhoto}.jpg`) } }
 };
 </script>
@@ -76,9 +70,7 @@ export default {
 
         .edit,
         .delete {
-          path {
-            fill: #fff;
-          }
+          color: #fff;
         }
       }
 

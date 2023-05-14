@@ -7,10 +7,10 @@
         <p v-if="post.welcomeScreen"> {{ post.blogPost }}</p>
         <p class="content-preview" v-else>{{ post.blogHTML }}</p>
         <router-link class="link link-ligt" v-if="post.welcomeScreen" to="#">
-          Login/Register <img :src="ArrowIcon" class="arrow"/>  
+          Login/Register <AnOutlinedArrowRight class="arrow"/>  
         </router-link>
         <router-link class="link" v-else to="#">
-          View The Post <img :src="ArrowIcon" class="arrow"/>  
+          View The Post <AnOutlinedArrowRight class="arrow"/>  
         </router-link>
       </div>
     </div>
@@ -22,16 +22,12 @@
 </template>
 
 <script>
-import ArrowIcon from '@/assets/Icons/arrow-right-light.svg';
+import { AnOutlinedArrowRight } from "@kalimahapps/vue-icons";
 
 export default {
   name: "BlogPost",
   props: ["post"],
-  setup() {
-    return {
-      ArrowIcon
-    };
-  },
+  components: { AnOutlinedArrowRight},
   methods: { getImage() { return require(`../assets/blogPhotos/${this.post.photo || this.post.blogCoverPhoto}.jpg`) } }
 };
 </script>
