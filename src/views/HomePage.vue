@@ -10,15 +10,25 @@
         </div>
       </div>
     </div>
+    <div class="updates">
+      <div class="container">
+        <h2>Never miss a post. Register your free account today!</h2>
+        <router-link class="router-button" to="#">
+          Register for Epistema <AnOutlinedArrowRight class="arrow arrow-light"/>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import BlogPost from '@/components/BlogPost.vue';
 import BlogCard from '@/components/BlogCard.vue';
+import { AnOutlinedArrowRight } from "@kalimahapps/vue-icons";
+
 export default {
   name: "HomePage",
-  components: { BlogPost, BlogCard},
+  components: { BlogPost, BlogCard, AnOutlinedArrowRight},
   data() {
     return {
       welcomeScreen: {
@@ -40,13 +50,12 @@ export default {
           blogCoverPhoto: "beautiful-stories"
         },
       ],
-      sampleBlogCards: [
-        { blogTitle:"Block Card #1", blogCoverPhoto: "stock-1", blogDate:"May 1, 2021"},
-        { blogTitle:"Block Card #2", blogCoverPhoto: "stock-2", blogDate:"May 1, 2021"},
-        { blogTitle:"Block Card #3", blogCoverPhoto: "stock-3", blogDate:"May 1, 2021"},
-        { blogTitle:"Block Card #4", blogCoverPhoto: "stock-4", blogDate:"May 1, 2021"},
-      ],
     };
+  },
+  computed: {
+    sampleBlogCards() {
+      return this.$store.state.sampleBlogCards;
+    }
   }
 };
 </script>
@@ -59,5 +68,38 @@ export default {
     margin-bottom: 32px;
   }
 }
+.updates {
+  .container {
+    padding: 100px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @media (min-width: 800px) {
+      padding: 125px 25px;
+      flex-direction: row;
+    }
 
+    .router-button {
+      display: flex;
+      font-size: 14px;
+      text-decoration: none;
+      @media (min-width: 800px) {
+        margin-left: auto;
+      }
+    }
+
+    h2 {
+      font-weight: 300;
+      font-size: 32px;
+      max-width: 425px;
+      width: 100%;
+      text-align: center;
+      text-transform: uppercase;
+      @media (min-width: 800px) {
+        text-align: initial;
+        font-size: 40px;
+      }
+    }
+  }
+}
 </style>

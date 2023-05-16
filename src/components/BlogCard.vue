@@ -1,6 +1,6 @@
 <template>
   <div class="blog-card">
-    <div class="icons">
+    <div v-show="editPost" class="icons">
       <div class="icon">
         <AkEdit class="edit"/>
       </div>
@@ -28,7 +28,14 @@ export default {
   name: "BlogCard",
   props: ["post"],
   components: { IcBin, AkEdit, AnOutlinedArrowRight },
-  methods: { getImage() { return require(`../assets/blogCards/${this.post.blogCoverPhoto}.jpg`) } }
+  methods: { getImage() { return require(`../assets/blogCards/${this.post.blogCoverPhoto}.jpg`) } },
+  computed: {
+    editPost: {
+      get() {
+        return this.$store.state.editPost;
+      }
+    }
+  },
 };
 </script>
 

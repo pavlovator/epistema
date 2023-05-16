@@ -2,13 +2,22 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import { auth } from "@/firebase/firebaseInit";
 
 
-const app = createApp(App);
+const vueApp = createApp(App);
 
-app.use(router);
-app.use(store);
-app.mount('#app');
+let firebaseApp;
+auth.onAuthStateChanged(() => {
+    if (!firebaseApp) {
+      vueApp.use(router);
+      vueApp.use(store);
+      vueApp.mount('#app');
+    }
+
+});
+
+
 
 
 

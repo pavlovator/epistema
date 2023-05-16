@@ -7,13 +7,12 @@
       <div class="nav-links">
         <ul>
           <router-link class="link" :to="{name: 'Home'}">Home</router-link>
-          <router-link class="link" :to="{name: 'Home'}">Blogs</router-link>
+          <router-link class="link" :to="{name: 'Blogs'}">Blogs</router-link>
           <router-link class="link" :to="{name: 'Home'}">Create Post</router-link>
-          <router-link class="link" :to="{name: 'Home'}">Login/ Register</router-link>
+          <router-link class="link" :to="{name: 'Login'}">Login/ Register</router-link>
         </ul>
       </div>
     </nav>
-    <img :src="barsIcon" alt="bars-icon" class="menu-icon"/>  
   </header>
 </template>
 
@@ -90,9 +89,4 @@ header {
     width: auto;
   }
 }
-
-
-
-
-
 </style>
