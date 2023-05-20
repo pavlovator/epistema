@@ -41,7 +41,39 @@ const routes = [
     meta: {
       title: 'Forgot Password',
     },
-  }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/ProfilePage.vue'),
+    meta: {
+      title: 'Profile',
+    },
+  },
+  {
+    path: '/create-post',
+    name: 'CreatePost',
+    component: () => import('../views/CreatePost.vue'),
+    meta: {
+      title: 'Create Post',
+    },
+  },
+  {
+    path: '/post-preview',
+    name: 'BlogPreview',
+    component: () => import('../views/BlogPreview.vue'),
+    meta: {
+      title: 'Preview Blog Post',
+    },
+  },
+  {
+    path: '/view-blog/:blogid',
+    name: 'ViewBlog',
+    component: () => import('../views/ViewBlog.vue'),
+    meta: {
+      title: 'View Blog Post',
+    },
+  },
 ]
 
 const router = createRouter({
@@ -49,7 +81,6 @@ const router = createRouter({
   routes
 })
 
-// I dont really understand how this works it sets the title of the page
 router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title} | Epistema`;
   next();

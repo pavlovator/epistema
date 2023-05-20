@@ -21,6 +21,7 @@
     </div>
     <router-link class="forgot-password" :to="{name: 'ForgotPassword'}">Forgot your password?</router-link>
     <button @click.prevent="signIn">Sign In</button>
+    <button @click.prevent="testIn">Test In</button>
     <div class="angle"></div>
   </form>
   <div class="background"></div>
@@ -45,19 +46,19 @@ export default {
     }
   },
   methods:{
-    signIn() {
-      signInWithEmailAndPassword(auth, this.email, this.password)
-      .then(() => {
+    async signIn() {
+      try {
+        await signInWithEmailAndPassword(auth, this.email, this.password);
         this.$router.push({ name: "Home" });
         this.error = false;
         this.errorMsg = "";
-        console.log(auth.currentUser.uid);
-      })
-      .catch((err) => {
+      } catch (err) {
         this.error = true;
         this.errorMsg = err.message;
-        console.log(err);
-      });
+      }
+    },
+    testIn() {
+      this.$router.push({ name: "Home" });
     }
   }
 }

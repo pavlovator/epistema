@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@kalimahapps/vue-icons": "^1.4.0",
+    "@vueup/vue-quill": "^1.2.0",
     "core-js": "^3.8.3",
     "firebase": "^9.22.0",
     "vue": "^3.2.13",

@@ -1,6 +1,6 @@
 <template>
 <div class="reset-password">
-  <ForgotPasswordModal v-if="modalActive" :modalMessage="modalMessage" v-on:close-modal="closeModal"/>
+  <UniversalModal v-if="modalActive" :modalMessage="modalMessage" v-on:close-modal="closeModal"/>
   <UniversalLoading v-if="loading" />
   <div class="form-wrap">
     <form class="reset">
@@ -26,7 +26,7 @@
 
 <script>
 import { CdMail } from "@kalimahapps/vue-icons";
-import ForgotPasswordModal from "@/components/ForgotPasswordModal.vue";
+import UniversalModal from "@/components/UniversalModal.vue";
 import UniversalLoading from "@/components/UniversalLoading.vue";
 import { auth } from "@/firebase/firebaseInit";
 import { sendPasswordResetEmail } from "firebase/auth";
@@ -35,7 +35,7 @@ export default {
   name: "ForgotPasswordPage",
   components: { 
     CdMail, 
-    ForgotPasswordModal, 
+    UniversalModal, 
     UniversalLoading 
   },
   data() {
@@ -48,7 +48,6 @@ export default {
   },
   methods: {
     resetPassword(){
-      console.log(auth);
       this.loading = true;
       sendPasswordResetEmail(auth, this.email)
       .then(() => {

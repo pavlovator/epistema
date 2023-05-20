@@ -1,18 +1,10 @@
 <template>
   <div class="blog-card">
-    <div v-show="editPost" class="icons">
-      <div class="icon">
-        <AkEdit class="edit"/>
-      </div>
-      <div class="icon">
-        <IcBin class="delete"/>
-      </div>
-    </div>
-    <img :src="getImage()" alt="">
+    <img :src="post.blogCoverPhoto" alt="">
     <div class="info">
       <h4>{{ post.blogTitle }}</h4>
-      <h6>Posted on: {{ post.blogDate }}</h6>
-      <router-link class="link" to="#" >
+      <h6>Posted on: {{ new Date(post.blogDate).toLocaleString("en-us", {dateStyle: "long"}) }}</h6>
+      <router-link class="link" :to="{name: 'ViewBlog', params: {blogid: this.post.blogID}}" >
         View The Post <AnOutlinedArrowRight class="arrow"/>
       </router-link>
     </div>
@@ -21,21 +13,12 @@
 
 <script>
 import { AnOutlinedArrowRight } from "@kalimahapps/vue-icons";
-import { IcBin } from "@kalimahapps/vue-icons";
-import { AkEdit } from "@kalimahapps/vue-icons";
 
 export default {
   name: "BlogCard",
   props: ["post"],
-  components: { IcBin, AkEdit, AnOutlinedArrowRight },
+  components: { AnOutlinedArrowRight },
   methods: { getImage() { return require(`../assets/blogCards/${this.post.blogCoverPhoto}.jpg`) } },
-  computed: {
-    editPost: {
-      get() {
-        return this.$store.state.editPost;
-      }
-    }
-  },
 };
 </script>
 
@@ -53,45 +36,6 @@ export default {
   &:hover {
     transform: rotateZ(-1deg) scale(1.01);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-
-  .icons {
-    display: flex;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 99;
-
-    .icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      background-color: #fff;
-      transition: 0.5s ease all;
-
-      &:hover {
-        background-color: #303030;
-
-        .edit,
-        .delete {
-          color: #fff;
-        }
-      }
-
-      &:nth-child(1) {
-        margin-right: 8px;
-      }
-
-      .edit,
-      .delete {
-        pointer-events: none;
-        height: 15px;
-        width: auto;
-      }
-    }
   }
 
   img {

@@ -1,20 +1,23 @@
 <template>
   <div class="app-wrapper">
-    <div class="app">
-      <NavigationMenu v-if="!navigation"/>
+    <div class="app" v-if="this.$store.state.postLoaded">
+      <AppNavigation v-if="!navigation"/>
       <router-view />
+      <AppFooter v-if="!navigation" />
     </div>
   </div>
 </template>
 
 <script>
-import NavigationMenu from './components/NavigationMenu.vue';
+import AppNavigation from './components/AppNavigation.vue';
+import AppFooter from './components/AppFooter.vue';
 import { auth } from "@/firebase/firebaseInit";
 
 export default {
   name: 'App',
   components: {
-    NavigationMenu
+    AppNavigation,
+    AppFooter
   },
   data() {
     return {
@@ -29,6 +32,7 @@ export default {
       }
     }); 
     this.checkRoute();
+    this.$store.dispatch("getPost");
   },
   methods:{
     checkRoute(){
