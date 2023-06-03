@@ -8,7 +8,7 @@
         <ul>
           <router-link class="link" :to="{name: 'Home'}">Home</router-link>
           <router-link class="link" :to="{name: 'Blogs'}">Blogs</router-link>
-          <router-link class="link" :to="{name: 'CreatePost'}">Create Post</router-link>
+          <router-link v-if="user" class="link" :to="{name: 'CreatePost'}">Create Post</router-link>
           <router-link v-if="!user" class="link" :to="{name: 'Login'}">Login/ Register</router-link>
         </ul>
         <div v-if="user" @click="toggleProfileMenu" class="profile" ref="profile">
@@ -83,13 +83,19 @@ header {
   padding: 0 25px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   z-index: 99;
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
   .link {
-  font-weight: 500;
-  padding: 0 8px;
-  transition: 0.3s color ease;
-    &:hover {
-      color: #1eb8b8;
-    }
+    font-weight: 500;
+    padding: 0 8px;
+    transition: 0.3s color ease;
+      &:hover {
+        color: #1eb8b8;
+      }
   }
 
   nav {
@@ -121,10 +127,6 @@ header {
 
       .link {
         margin-right: 32px;
-      }
-
-      .link:last-child {
-        margin-right: 0;
       }
     }
 
