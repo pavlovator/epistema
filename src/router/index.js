@@ -59,14 +59,6 @@ const routes = [
     },
   },
   {
-    path: '/post-preview',
-    name: 'BlogPreview',
-    component: () => import('../views/BlogPreview.vue'),
-    meta: {
-      title: 'Preview Blog Post',
-    },
-  },
-  {
     path: '/view-blog/:blogid',
     name: 'ViewBlog',
     component: () => import('../views/ViewBlog.vue'),
@@ -74,6 +66,14 @@ const routes = [
       title: 'View Blog Post',
     },
   },
+  {
+    path:'/insertion-sort',
+    name: 'InsertionSort',
+    component: () => import('../views/posts/InsertionSort.vue'),
+    meta: {
+      title: 'Insertion Sort',
+    }
+  }
 ]
 
 const router = createRouter({

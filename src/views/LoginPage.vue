@@ -21,7 +21,6 @@
     </div>
     <router-link class="forgot-password" :to="{name: 'ForgotPassword'}">Forgot your password?</router-link>
     <button @click.prevent="signIn">Sign In</button>
-    <button @click.prevent="testIn">Test In</button>
     <div class="angle"></div>
   </form>
   <div class="background"></div>
@@ -56,9 +55,6 @@ export default {
         this.error = true;
         this.errorMsg = err.message;
       }
-    },
-    testIn() {
-      this.$router.push({ name: "Home" });
     }
   }
 }
