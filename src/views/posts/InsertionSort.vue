@@ -53,6 +53,7 @@ export default {
     return {
       width: 1000,
       height: 300,
+      maxArrCell: 125,
       arr: [3,2,1],
       rectangles: null,
       sliderValue: 3,
@@ -135,24 +136,59 @@ export default {
       this.refreshChart();
     },
 
-    randomArr(){
+    async randomArr(){
+      this.animateRandom(true);
+      await this.sleep(500);
       for (let i=0; i<this.arr.length; i++){
         this.arr[i] = Math.floor(Math.random() * 100);
         d3.select("#rect"+i)
           .select("text")
           .text(this.arr[i]);
       }
+      this.animateRandom(false);
+      await this.sleep(500);
       this.arrayString = this.getArrayString();
+      console.log("111")
       this.refreshChart()
     },
 
-    shuffleArr(){
+    animateRandom(fadeIn){
+      d3.selectAll(".arrChart")
+      .select("text")
+      .transition()
+      .duration(500)
+      .style('opacity', () => {
+        if (fadeIn){
+          return 0;
+        } else {
+          return 1;
+        }
+      })
+    },
+
+    async shuffleArr(){
       for (let i = this.arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [this.arr[i], this.arr[j]] = [this.arr[j], this.arr[i]];
       }
       this.arrayString = this.getArrayString();
-      this.refreshChart()
+      this.animateShuffle();
+      await this.sleep(800);
+      this.refreshChart();
+    },
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+    animateShuffle(){
+      let arr = [...this.arr];
+      d3.selectAll(".arrChart")
+        .transition()
+        .duration(800)
+        .attr("transform", (d) => {
+          const newIdx = arr.indexOf(d);
+          arr[newIdx] = -1;
+          return d3.select("#rect" + newIdx).attr("transform");
+        })
     },
     refreshChart(){
       d3.select(".svg").selectAll('*').remove();
@@ -171,11 +207,11 @@ export default {
         .append("g")
         .attr("id", (d,i) => {return "rect" + i})
         .attr("transform", (d, i) => { 
-          return "translate("+ i * (this.width/this.arr.length) + "," + (this.height - d*3) +")"; 
+          return "translate("+ i * (this.getSquareSize()) + "," + (this.height - d*3) +")"; 
         });
 
       this.rectangles.append("rect")
-        .attr("width", this.width/this.arr.length)
+        .attr("width", this.getSquareSize())
         .attr("height", (d) => {return d*3})
         .attr("fill", "white")
         .attr("stroke", "black");
@@ -183,6 +219,7 @@ export default {
       this.rectangles.append("text")
         .attr("y", 40 / 2)
         .attr("x", 15)
+        .style("text-anchor", "middle")
         .attr("dy", ".35em")
         .text(function(d) { return d; });
     },
@@ -193,23 +230,37 @@ export default {
         .data(this.arr)
         .enter()
         .append("g")
+        .attr("class", "arrChart")
         .attr("id", (d,i) => {return "rect" + i})
         .attr("transform", (d, i) => { 
-          return "translate("+ i * (this.width/this.arr.length) + ",0)"; 
+          if (this.width/this.arr.length > this.maxArrCell) {
+            return "translate("+ ( (this.width/2 - (this.arr.length - i) * (this.getSquareSize()/2) ) + i*this.getSquareSize()/2 ) +
+                    "," + (this.height/2 - this.getSquareSize() / 2 ) +")";
+          } 
+          return "translate("+ i * (this.getSquareSize()) + "," + (this.height/2 - this.getSquareSize() / 2 ) +")"; 
         });
 
       this.rectangles.append("rect")
-        .attr("width", this.width/this.arr.length)
-        .attr("height", this.width/this.arr.length)
+        .attr("width", this.getSquareSize())
+        .attr("height", this.getSquareSize())
+        .attr("rx", "10")
+        .attr("ry", "10")
         .attr("fill", "white")
         .attr("stroke", "black");
 
       this.rectangles.append("text")
-        .attr("y", 40 / 2)
-        .attr("x", 15)
-        .attr("dy", ".35em")
+        .attr("y", this.getSquareSize() - this.getSquareSize()/3)
+        .attr("x", this.getSquareSize() - this.getSquareSize()/2)
+        .style("text-anchor", "middle")
+        .style("font-size", Math.floor(this.getSquareSize()/2) + "px")
         .text(function(d) { return d; });
     },
+    getSquareSize(){
+      if (this.width/this.arr.length > this.maxArrCell) {
+        return this.maxArrCell;
+      } 
+      return this.width/this.arr.length;
+    }
   },
   mounted() {
     d3.select('.svg')
@@ -224,7 +275,7 @@ export default {
 <style lang="scss" scoped>
 div {
   margin: 20px;
-  background-color: wheat;
+  background-color: gainsboro;
 }
 svg {
   background-color: white;
